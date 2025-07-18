@@ -22,13 +22,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
+ENV PATH="/opt/conda/bin:$PATH" \
+    LC_ALL=C
+
 RUN micromamba install --name base -c conda-forge -c bioconda antismash=${ANTISMASH_VER} && \
     download-antismash-databases && \
     micromamba clean -a -f -y && \
     mkdir /data
-
-ENV PATH="/opt/conda/bin:$PATH" \
-    LC_ALL=C
 
 CMD ["antismash", "--help"]
 
